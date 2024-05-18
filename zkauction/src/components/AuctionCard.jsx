@@ -10,7 +10,7 @@ import { Input } from "./ui/input"
 import React, { useState} from 'react';
 import { toast } from "sonner";
 
-export default function AuctionCard({ title, url, address, yourAddress, contract}) {
+export default function AuctionCard({ title, url, endDate}) {
 
     const [bidAmount, setBidAmount] = useState(0);
 
@@ -30,6 +30,9 @@ export default function AuctionCard({ title, url, address, yourAddress, contract
             </CardHeader>
             <CardContent>
                 <img loading="lazy" src={url} alt={title}  />
+            </CardContent>
+            <CardContent>
+                <Label>End Date: {endDate}</Label>
             </CardContent>
 
             <CardContent>

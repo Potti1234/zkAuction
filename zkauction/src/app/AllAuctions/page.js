@@ -11,6 +11,7 @@ import { SupabaseContext } from "@/components/containerContext";
 import { createClient } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react';
 import { groth16 } from "snarkjs";
+import { M_PLUS_1 } from "next/font/google";
 
 export default function Page() {
 
@@ -45,14 +46,15 @@ export default function Page() {
         setIsPopupOpen(false);
     };
 
-    const confirm = () => {
-        const { error } = supabase
-        .from('Auction?apikey='+apikey)
-        .insert({ created_at: Date.now() , name: name, imageUrl: imageUrl, endDate: Date.now()}).then(() => {
-            console.log(error);
+    const confirm = async () => {
+        
+        const { error } = await supabase
+        .from('Auction')
+        .insert({ id:1, created_at: Date.now() , name: name, imageUrl: imageUrl, endDate: Date.now()}).then(() => {
             closePopup();
         })
 
+        console.log(error);
     };
 
     const prove = async () => { 
