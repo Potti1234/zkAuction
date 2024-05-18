@@ -10,6 +10,7 @@ import "../popup.css";
 import { SupabaseContext } from "@/components/containerContext";
 import { createClient } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react';
+import { groth16 } from "snarkjs";
 
 export default function Page() {
 
@@ -55,7 +56,7 @@ export default function Page() {
     };
 
     const prove = async () => { 
-        const {proof, publicSignals} = await snarkjs.groth16.fullProve({ a: 11, b: 3 }, "circuit.wasm", "circuit.zkey")
+        const {proof, publicSignals} = await groth16.fullProve({ a: 10, b: 21 }, "circuit.wasm", "circuit_final.zkey")
         console.log({ proof, publicSignals });
     };
 
