@@ -11,15 +11,14 @@ import { SupabaseContext } from "@/components/containerContext";
 import { createClient } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react';
 import { groth16 } from "snarkjs";
-import { M_PLUS_1 } from "next/font/google";
 
 export default function Page() {
 
     const [isPopupOpen, setIsPopupOpen] = React.useState(false);
     const [name, setName] = React.useState('');
     const [imageUrl, setImageUrl] = React.useState('');
-    const [endDate, setEndDate] = React.useState('');
-    const [endTime, setEndTime] = React.useState('');
+    const [auctionDuration, setAuctionDuration] = React.useState('');
+    const [sellerAddress, setSellerAddress] = React.useState('');
     const supa = useContext(SupabaseContext);
 
     const snarkjs = window.snarkjs;
@@ -41,12 +40,14 @@ export default function Page() {
         setName('');
         setImageUrl('');
         setEndDate('');
-        setEndTime('');
+        setAuctionDuration('');
 
         setIsPopupOpen(false);
     };
 
     const confirm = async () => {
+
+        //make call to smart contract
         
         const { error } = await supabase
         .from('Auction')
@@ -58,7 +59,7 @@ export default function Page() {
     };
 
     const prove = async () => { 
-        const {proof, publicSignals} = await groth16.fullProve({ a: 10, b: 21 }, "circuit.wasm", "circuit_final.zkey")
+        const {proof, publicSignals} = await groth16.fullProve({ a: 10, b: 21 }, "highestbidder.wasm", "highestbidder_final.zkey")
         console.log({ proof, publicSignals });
     };
 
@@ -81,14 +82,12 @@ export default function Page() {
 
                     <br />
 
-                    <Label htmlFor="EndDate">AuctionEndDate:</Label>
-                    <Input onChangeCapture={e => setEndDate(e.currentTarget.value)} type="endDate" id="endDate" placeholder={"endDate"} value={endDate} />
-
+                    <Label htmlFor="Duration">Duration:</Label>
+                    <Input onChangeCapture={e => setAuctionDuration(e.currentTarget.value)} type="duration" id="duration" placeholder={"Duration in seconds"} value={auctionDuration} />
                     <br />
 
-                    <Label htmlFor="EndTime">AuctionEndTime:</Label>
-                    <Input onChangeCapture={e => setEndTime(e.currentTarget.value)} type="endTime" id="endTime" placeholder={"EndTime in format HH:MM:SS"} value={endTime} />
-
+                    <Label htmlFor="SellerAddress">Seller Address:</Label>
+                    <Input onChangeCapture={e => setSellerAddress(e.currentTarget.value)} type="SellerAddress" id="SellerAddress" placeholder={"Seller Address"} value={sellerAddress} />
                 
                 <Button onClick={closePopup}>Close</Button>
                 <Button onClick={confirm}>Create Auction</Button>

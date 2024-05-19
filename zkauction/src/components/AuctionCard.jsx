@@ -7,12 +7,14 @@ import {
 import { Button } from "./ui/button"
 import { Label } from "./ui/label"
 import { Input } from "./ui/input"
-import React, { useState} from 'react';
+import React, { useState, useContext} from 'react';
 import { toast } from "sonner";
+import { AccountContext } from "./containerContext";
 
-export default function AuctionCard({ title, url, endDate}) {
+export default function AuctionCard({ title, url, endDate, sellerAddress}) {
 
     const [bidAmount, setBidAmount] = useState(0);
+    const account = useContext(AccountContext);
 
     const bid = () => {
         // Add zkSnark circuit here
@@ -33,6 +35,9 @@ export default function AuctionCard({ title, url, endDate}) {
             </CardContent>
             <CardContent>
                 <Label>End Date: {endDate}</Label>
+            </CardContent>
+            <CardContent>
+                <Label>Seller Address: {sellerAddress}</Label>
             </CardContent>
 
             <CardContent>

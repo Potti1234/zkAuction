@@ -38,7 +38,7 @@ export default function AuctionCardList() {
                         <div style={{ width: "25%" }}>
                             <AuctionCard
                                 key={index}
-                                title={index.toString()}
+                                title={item.title}
                                 url={item.url}
                                 endDate={item.end_date}
                             />
